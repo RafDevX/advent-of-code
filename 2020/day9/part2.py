@@ -15,7 +15,7 @@ def valid_number(preamble, num):
 
 def first_malformed_number(inp, preamble_size = 25):
 	preamble = inp[:preamble_size]
-	for num in inp[preamble_size:len(inp)]:
+	for num in inp[preamble_size:]:
 		if not valid_number(preamble, num):
 			return num
 		preamble.pop(0)
