@@ -29,4 +29,4 @@ def is_valid_arrangement(adapters_in):
 
 # HOW?
 
-print('Total arrangements:', check_sub_arrangements(input_lines))
+print('Total arrangements:', arrangements)
