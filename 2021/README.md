@@ -7,3 +7,5 @@ To complement the cursed code, I have a semi-cursed way of running it: for examp
 ```sh
 function car { g++ -o $1.out $1.cpp && ./$1.out $2; }; car part1 input.txt
 ```
+
+Eventually, the above should just be turned into a Makefile so a bit of sanity can be returned to the world.
