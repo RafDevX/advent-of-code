@@ -6,46 +6,34 @@
 
 using namespace std;
 
-int mark_number_for_card(vector<vector<vector<int>>> *cards, int num, int cardi)
+bool mark_number_in_card(vector<vector<int>> *card, int num)
 {
-	for (int rowi = 0; rowi < (*cards)[cardi].size(); rowi++) {
-		bool checkThisRow = false;
+	for (int row = 0; row < (*card).size(); row++) {
 		bool incompleteRow = false;
-		for (int i = 0; i < (*cards)[cardi][rowi].size(); i++) {
-			if ((*cards)[cardi][rowi][i] == num) {
-				(*cards)[cardi][rowi][i] = -1;
-				checkThisRow = true;
-				int incompleteCol = false;
-				for (int j = 0; j < (*cards)[cardi].size(); j++) {
-					if ((*cards)[cardi][j][i] >= 0) {
+		int marked = false;
+		for (int col = 0; col < (*card)[row].size(); col++) {
+			if ((*card)[row][col] == num) {
+				(*card)[row][col] = -1;
+				marked = true;
+
+				bool incompleteCol = false;
+				for (int i = 0; i < (*card).size(); i++) {
+					if ((*card)[i][col] >= 0) {
 						incompleteCol = true;
 						break;
 					}
 				}
-				if (!incompleteCol) {
-					return cardi;
-				}
-			} else if ((*cards)[cardi][rowi][i] >= 0) {
+				if (!incompleteCol)
+					return true;
+
+			} else if ((*card)[row][col] >= 0) {
 				incompleteRow = true;
 			}
 		}
-		if (checkThisRow && !incompleteRow) { // line
-			return cardi;
-		}
+		if (marked && !incompleteRow)
+			return true;
 	}
-	return -1;
-}
-
-vector<int> mark_number(vector<vector<vector<int>>> *cards, int num)
-{
-	vector<int> ret;
-	for (int cardi = 0; cardi < (*cards).size(); cardi++) {
-		int winner = mark_number_for_card(cards, num, cardi);
-		if (winner >= 0) {
-			ret.push_back(cardi);
-		}
-	}
-	return ret;
+	return false;
 }
 
 int sum_unmarked(vector<vector<int>> card)
@@ -59,19 +47,6 @@ int sum_unmarked(vector<vector<int>> card)
 		}
 	}
 	return sum;
-}
-
-void handle_winner(vector<vector<vector<int>>> *cards, int winner, int num)
-{
-	if ((*cards).size() > 1) {
-		(*cards).erase((*cards).begin() + winner);
-	} else {
-		int unmarked = sum_unmarked((*cards)[winner]);
-		cout << "Card: #" << winner + 1 << "\n";
-		cout << "Unmarked: " << unmarked << "\n";
-		cout << "Number: " << num << "\n";
-		cout << "Score: " << unmarked * num << "\n";
-	}
 }
 
 int main(int argc, char *argv[])
@@ -120,38 +95,39 @@ int main(int argc, char *argv[])
 			}
 		}
 		for (int num : nums) {
-			vector<int> winners = mark_number(&cards, num);
-			for (int winner : winners) {
-				handle_winner(&cards, winner, num);
+			bool stop = false;
+			vector<int> toRemove;
+			int removed = 0;
+			for (int i = 0; i < cards.size(); i++) {
+				if (mark_number_in_card(&cards[i], num)) {
+					toRemove.push_back(i);
+				}
 			}
-			// for (int i = 0; i < cards.size(); i++) {
-			// 	bool stop = false;
-			// 	for (int j = 0; j < cards[i].size(); j++) {
-			// 		for (int k = 0; k < cards[i][j].size(); k++) {
-			// 			if (cards[i][j][k] >= 0) {
-			// 				stop = true;
-			// 				break;
-			// 			}
-			// 		}
-			// 		if (stop)
-			// 			break;
-			// 	}
-			// 	if (!stop) { // no clue why this isn't being caught by handle_winner
-			// 		cout << "[" << i << "],";
-			// 		cards.erase(cards.begin() + i);
-			// 	}
-			// }
+			for (int pos : toRemove) {
+				if (cards.size() > 1) {
+					cards.erase(cards.begin() + pos - removed++);
+				} else {
+					int unmarked = sum_unmarked(cards[0]);
+					cout << "Number: " << num << "\n";
+					cout << "Unmarked Numbers: " << unmarked << "\n";
+					cout << "Score: " << num * unmarked << "\n";
+					stop = true;
+					break;
+				}
+			}
+			if (stop)
+				return 0;
 		}
 		cout << "No winner found\n";
-		for (auto card : cards) {
-			for (auto line : card) {
-				for (auto num : line) {
-					cout << "|" << num;
-				}
-				cout << "|\n---\n";
-			}
-			cout << "\n===\n";
-		}
+		// for (auto card : cards) {
+		// 	for (auto line : card) {
+		// 		for (auto num : line) {
+		// 			cout << "|" << num;
+		// 		}
+		// 		cout << "|\n---\n";
+		// 	}
+		// 	cout << "\n===\n";
+		// }
 	}
 	return 0;
 }
