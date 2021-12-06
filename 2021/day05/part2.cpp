@@ -10,13 +10,13 @@ void mark_line_in_map(vector<vector<int>> line, vector<vector<int>> *map)
 {
 	if (line[0][0] == line[1][0]) {
 		for (int i = min(line[0][1], line[1][1]); i <= max(line[0][1], line[1][1]); i++) {
-			//cout << "v-point (" << line[0][0] << ", " << i << ")\n";
+			// cout << "v-point (" << line[0][0] << ", " << i << ")\n";
 			(*map)[line[0][0]][i]++;
 		}
-		//exit(1);
+		// exit(1);
 	} else if (line[0][1] == line[1][1]) {
 		for (int i = min(line[0][0], line[1][0]); i <= max(line[0][0], line[1][0]); i++) {
-			//cout << "h-point (" << i << ", " << line[0][1] << ")\n";
+			// cout << "h-point (" << i << ", " << line[0][1] << ")\n";
 			(*map)[i][line[0][1]]++;
 		}
 		/*
@@ -38,11 +38,11 @@ void mark_line_in_map(vector<vector<int>> line, vector<vector<int>> *map)
 	} else if (line[0][0] - line[1][0] == -(line[0][1] - line[1][1])) {
 		int sign = ((line[1][0] - line[0][0]) < 0) ? -1 : 1;
 		for (int i = 0; i <= abs(line[1][0] - line[0][0]); i++) {
-			//cout << "d-point (" << line[0][0] + i * sign << ", " << line[0][1] - i * sign << ")\n";
+			// cout << "d-point (" << line[0][0] + i * sign << ", " << line[0][1] - i * sign << ")\n";
 			(*map)[line[0][0] + i * sign][line[0][1] - i * sign]++;
 		}
-		//cerr << "Diagonal line (" << line[0][0] << ", " << line[0][1] << ") -> (" << line[1][0] << ", " << line[1][1] << ")!\n";
-		//exit(1);
+		// cerr << "Diagonal line (" << line[0][0] << ", " << line[0][1] << ") -> (" << line[1][0] << ", " << line[1][1] << ")!\n";
+		// exit(1);
 	} else {
 		cerr << "Unknown line (" << line[0][0] << ", " << line[0][1] << ") -> (" << line[1][0] << ", " << line[1][1] << ")!\n";
 		cerr << "what";
@@ -90,7 +90,7 @@ int main(int argc, char *argv[])
 				lines.push_back(line);
 			}
 		}
-		vector<vector<int>> map = vector(maxY + 1, vector(maxX + 1, 0));
+		vector<vector<int>> map = vector<vector<int>>(maxY + 1, vector<int>(maxX + 1, 0));
 		for (vector<vector<int>> line : lines) {
 			mark_line_in_map(line, &map);
 		}
