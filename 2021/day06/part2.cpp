@@ -6,22 +6,28 @@
 
 using namespace std;
 
-void show_school(vector<int> school, string prefix)
+void show_school(vector<long long> school, string prefix)
 {
+	vector<long long> fs;
+	for (long long i = 0; i < school.size(); i++) {
+		for (long long j = 0; j < school[i]; j++) {
+			fs.push_back(i);
+		}
+	}
 	cout << prefix;
-	for (int fish : school) {
+	for (long long fish : fs) {
 		cout << fish << ",";
 	}
 	cout << "\n";
 }
 
-void step(vector<int> *school)
+void step(vector<long long> *school)
 {
-	vector<int> newSchool;
-	for (int i = 0; i < (*school).size(); i++) {
+	vector<long long> newSchool;
+	for (long long i = 0; i < (*school).size(); i++) {
 		newSchool.push_back((*school)[i]);
 	}
-	for (int i = 0; i < (*school).size(); i++) {
+	for (long long i = 0; i < (*school).size(); i++) {
 		if (i == 0) {
 			newSchool[6] += (*school)[0];
 			newSchool[8] += (*school)[0];
@@ -31,7 +37,7 @@ void step(vector<int> *school)
 			newSchool[i] -= (*school)[i];
 		}
 	}
-	for (int i = 0; i < (*school).size(); i++) {
+	for (long long i = 0; i < (*school).size(); i++) {
 		(*school)[i] = newSchool[i];
 	}
 }
@@ -45,22 +51,26 @@ int main(int argc, char *argv[])
 	fstream file;
 	file.open(argv[1], ios::in);
 	if (file.is_open()) {
-		vector<int> school;
-		for (int i = 0; i <= 8; i++) {
+		vector<long long> school;
+		for (long long i = 0; i <= 8; i++) {
 			school.push_back(0);
 		}
-		for (int i; file >> i;) {
+		for (long long i; file >> i;) {
 			school[i]++;
 			if (file.peek() == ',') {
 				file.ignore();
 			}
 		}
 		show_school(school, "Initial Fish: ");
-		for (int i = 1; i <= 256; i++) {
+		for (long long i = 1; i <= 256; i++) {
 			step(&school);
-			//show_school(school, "Fish after " + (string)(i < 10 ? " " : "") + to_string(i) + " day" + (i == 1 ? ":  " : "s: "));
+			// show_school(school, "Fish after " + (string)(i < 10 ? " " : "") + to_string(i) + " day" + (i == 1 ? ":  " : "s: "));
 		}
-		cout << "Total " << school.size() << " fish";
+		long long c = 0;
+		for (long long i = 0; i < school.size(); i++) {
+			c += school[i];
+		}
+		cout << "Total " << c << " fish";
 	}
 	return 0;
 }
