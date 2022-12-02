@@ -25,7 +25,7 @@ impl AocDay for Day {
 
         let calories_sum = elves.iter().map(|x| x.iter().sum()).collect();
 
-        AocDay01 { calories_sum }
+        Self { calories_sum }
     }
 
     fn part1(&self) -> i64 {

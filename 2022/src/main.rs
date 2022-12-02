@@ -4,12 +4,14 @@ use std::io::{BufRead, BufReader};
 
 use config::{Config, ConfigError};
 
+use crate::day01::AocDay01;
+use crate::day02::AocDay02;
+
 mod day01;
+mod day02;
 
-fn main() -> std::io::Result<()> {
-    let days = vec![day01::AocDay01::preprocessing];
-
-    let inputs_dir: String = get_settings().unwrap().get("input_dir").unwrap();
+fn main() {
+    let inputs_dir: String = get_settings().unwrap().get("inputs_dir").unwrap();
 
     let puzzle_index: usize = env::args()
         .skip(1)
@@ -21,11 +23,11 @@ fn main() -> std::io::Result<()> {
     let input_file = format!("{inputs_dir}/day{puzzle_index:0>2}.txt");
     let input = read_input_file(input_file);
 
-    let puzzle = days.get(puzzle_index - 1).unwrap()(input);
-    println!("Part 1: {}", puzzle.part1());
-    println!("Part 2: {}", puzzle.part2());
-
-    Ok(())
+    match puzzle_index {
+        1 => solve(AocDay01::preprocessing(input)),
+        2 => solve(AocDay02::preprocessing(input)),
+        _ => unimplemented!("No such puzzle"),
+    };
 }
 
 pub trait AocDay {
@@ -44,6 +46,11 @@ fn read_input_file(path: String) -> impl Iterator<Item = String> {
     BufReader::new(File::open(path).expect("Failed to open input file"))
         .lines()
         .map(|r| r.expect("I/O error while reading input"))
+}
+
+fn solve(puzzle: impl AocDay) {
+    println!("Part 1: {}", puzzle.part1());
+    println!("Part 2: {}", puzzle.part2());
 }
 
 #[cfg(test)]
