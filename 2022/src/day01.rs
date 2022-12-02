@@ -1,7 +1,7 @@
 use crate::AocDay;
 
 pub struct AocDay01 {
-    elves: Vec<Vec<i64>>,
+    calories_sum: Vec<i64>,
 }
 
 impl AocDay for AocDay01 {
@@ -19,15 +19,17 @@ impl AocDay for AocDay01 {
         }
         elves.push(elf);
 
-        AocDay01 { elves }
+        let calories_sum = elves.iter().map(|x| x.iter().sum()).collect();
+
+        AocDay01 { calories_sum }
     }
 
     fn part1(&self) -> i64 {
-        self.elves.iter().map(|x| x.iter().sum()).max().unwrap()
+        self.calories_sum.iter().max().unwrap().to_owned()
     }
 
     fn part2(&self) -> i64 {
-        let mut vec: Vec<i64> = self.elves.iter().map(|x| x.iter().sum()).collect();
+        let mut vec: Vec<i64> = self.calories_sum.to_owned();
         vec.sort();
         vec.reverse();
         (&vec[0..=2]).iter().sum()
