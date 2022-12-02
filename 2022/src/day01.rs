@@ -4,7 +4,11 @@ pub struct AocDay01 {
     calories_sum: Vec<i64>,
 }
 
-impl AocDay for AocDay01 {
+type Day = AocDay01;
+#[cfg(test)]
+static PUZZLE_INDEX: usize = 1;
+
+impl AocDay for Day {
     fn preprocessing(lines: impl Iterator<Item = String>) -> Self {
         let mut elves = Vec::new();
         let mut elf: Vec<i64> = Vec::new();
@@ -33,5 +37,22 @@ impl AocDay for AocDay01 {
         vec.sort();
         vec.reverse();
         (&vec[0..=2]).iter().sum()
+    }
+}
+
+#[cfg(test)]
+mod tests {
+
+    use super::*;
+    use crate::tests::setup_example;
+
+    #[test]
+    fn part1_example() {
+        assert_eq!(24_000, setup_example::<Day>(PUZZLE_INDEX).part1());
+    }
+
+    #[test]
+    fn part2_example() {
+        assert_eq!(45_000, setup_example::<Day>(PUZZLE_INDEX).part2());
     }
 }
