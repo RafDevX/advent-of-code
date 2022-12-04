@@ -7,10 +7,12 @@ use config::{Config, ConfigError};
 use crate::day01::AocDay01;
 use crate::day02::AocDay02;
 use crate::day03::AocDay03;
+use crate::day04::AocDay04;
 
 mod day01;
 mod day02;
 mod day03;
+mod day04;
 
 fn main() {
     let inputs_dir: String = get_settings().unwrap().get("inputs_dir").unwrap();
@@ -29,6 +31,7 @@ fn main() {
         1 => solve(AocDay01::preprocessing(input)),
         2 => solve(AocDay02::preprocessing(input)),
         3 => solve(AocDay03::preprocessing(input)),
+        4 => solve(AocDay04::preprocessing(input)),
         _ => unimplemented!("No such puzzle"),
     };
 }
