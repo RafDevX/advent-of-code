@@ -7,4 +7,3 @@ edition = "2021"
 
 [dependencies]
 config = "0.13.2"
-regex = "1.7.0"

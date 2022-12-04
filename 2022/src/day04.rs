@@ -1,5 +1,4 @@
 use crate::AocDay;
-use regex::Regex;
 
 pub struct AocDay04 {
     pairs: Vec<Pair>,
@@ -35,19 +34,12 @@ impl Pair {
 
 impl From<String> for Pair {
     fn from(line: String) -> Pair {
-        // there's probably a better way than to build the regex every time
-        let re: Regex = Regex::new(r"(\d+)-(\d+),(\d+)-(\d+)").unwrap();
-        let captures = re.captures(&line).unwrap();
-        Pair(
-            (
-                captures.get(1).unwrap().as_str().parse().unwrap(),
-                captures.get(2).unwrap().as_str().parse().unwrap(),
-            ),
-            (
-                captures.get(3).unwrap().as_str().parse().unwrap(),
-                captures.get(4).unwrap().as_str().parse().unwrap(),
-            ),
-        )
+        let points: Vec<Vec<usize>> = line
+            .split(",")
+            .map(|x| x.split("-").map(|y| y.parse().unwrap()).collect())
+            .collect();
+
+        Pair((points[0][0], points[0][1]), (points[1][0], points[1][1]))
     }
 }
 
