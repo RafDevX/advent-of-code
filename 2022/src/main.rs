@@ -1,3 +1,4 @@
+use core::fmt;
 use std::env;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
@@ -8,11 +9,13 @@ use crate::day01::AocDay01;
 use crate::day02::AocDay02;
 use crate::day03::AocDay03;
 use crate::day04::AocDay04;
+use crate::day05::AocDay05;
 
 mod day01;
 mod day02;
 mod day03;
 mod day04;
+mod day05;
 
 fn main() {
     let inputs_dir: String = get_settings().unwrap().get("inputs_dir").unwrap();
@@ -32,14 +35,17 @@ fn main() {
         2 => solve(AocDay02::preprocessing(input)),
         3 => solve(AocDay03::preprocessing(input)),
         4 => solve(AocDay04::preprocessing(input)),
+        5 => solve(AocDay05::preprocessing(input)),
         _ => unimplemented!("No such puzzle"),
     };
 }
 
 pub trait AocDay {
+    type R: fmt::Display;
+
     fn preprocessing(lines: impl Iterator<Item = String>) -> Self;
-    fn part1(&self) -> i64;
-    fn part2(&self) -> i64;
+    fn part1(&self) -> Self::R;
+    fn part2(&self) -> Self::R;
 }
 
 fn get_settings() -> Result<Config, ConfigError> {

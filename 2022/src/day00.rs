@@ -7,15 +7,17 @@ type Day = AocDay00;
 static PUZZLE_INDEX: usize = 0;
 
 impl AocDay for Day {
+    type R = i64;
+
     fn preprocessing(lines: impl Iterator<Item = String>) -> Self {
         todo!()
     }
 
-    fn part1(&self) -> i64 {
+    fn part1(&self) -> Self::R {
         todo!()
     }
 
-    fn part2(&self) -> i64 {
+    fn part2(&self) -> Self::R {
         todo!()
     }
 }

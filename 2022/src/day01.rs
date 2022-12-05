@@ -9,6 +9,8 @@ type Day = AocDay01;
 static PUZZLE_INDEX: usize = 1;
 
 impl AocDay for Day {
+    type R = i64;
+
     fn preprocessing(lines: impl Iterator<Item = String>) -> Self {
         let mut elves = Vec::new();
         let mut elf: Vec<i64> = Vec::new();
@@ -28,11 +30,11 @@ impl AocDay for Day {
         Self { calories_sum }
     }
 
-    fn part1(&self) -> i64 {
+    fn part1(&self) -> Self::R {
         self.calories_sum.iter().max().unwrap().to_owned()
     }
 
-    fn part2(&self) -> i64 {
+    fn part2(&self) -> Self::R {
         let mut vec: Vec<i64> = self.calories_sum.to_owned();
         vec.sort();
         vec.reverse();
