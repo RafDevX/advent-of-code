@@ -27,8 +27,7 @@ fn main() {
     let inputs_dir: String = get_settings().unwrap().get("inputs_dir").unwrap();
 
     let puzzle_index: usize = env::args()
-        .skip(1)
-        .next()
+        .nth(1)
         .expect("Please provide a day number")
         .parse()
         .expect("Puzzle day must be a number");

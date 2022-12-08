@@ -60,7 +60,7 @@ impl AocDay for Day {
 
         for line in lines {
             rounds.push((
-                match line.chars().nth(0) {
+                match line.chars().next() {
                     Some('A') => OpponentMove::Rock,
                     Some('B') => OpponentMove::Paper,
                     Some('C') => OpponentMove::Scissors,

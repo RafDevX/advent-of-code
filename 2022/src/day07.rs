@@ -7,29 +7,31 @@ type Day = AocDay07;
 static PUZZLE_INDEX: usize = 7;
 
 pub struct AocDay07 {
-    root: Rc<RefCell<Dir>>,
-    dirs: Vec<Rc<RefCell<Dir>>>,
+    root: DirWrapper,
+    dirs: Vec<DirWrapper>,
 }
 
 const MAX_FS_SIZE: u64 = 70_000_000;
 const REQUIRED_UNUSED: u64 = 30_000_000;
 
+type DirWrapper = Rc<RefCell<Dir>>;
+
 struct Dir {
     name: String,
     calculated_size: Option<u64>,
-    children: Option<(Vec<Rc<RefCell<Dir>>>, Vec<File>)>,
-    parent: Option<Rc<RefCell<Dir>>>,
+    children: Option<(Vec<DirWrapper>, Vec<File>)>,
+    parent: Option<DirWrapper>,
 }
 
 impl Dir {
-    fn find_child_dir(&self, name: &str) -> Option<Rc<RefCell<Dir>>> {
+    fn find_child_dir(&self, name: &str) -> Option<DirWrapper> {
         self.children
             .as_ref()
             .expect("Parent not yet traversed!")
             .0
             .iter()
             .find(|x| x.borrow().name == name)
-            .map(|x| x.clone())
+            .cloned()
     }
 
     fn calculate_size(&mut self) -> u64 {
@@ -71,43 +73,37 @@ impl AocDay for Day {
             parent: None,
         }));
         let mut dirs = vec![root.clone()];
-        let mut cwd: Option<Rc<RefCell<Dir>>> = None;
+        let mut cwd: Option<DirWrapper> = None;
         let mut listing = false;
 
         for line in lines {
-            // how to do a match with line[..4] here?
-            // "expected str, found &str" in arms
-
-            if line.starts_with("$ cd ") {
+            if let Some(line) = line.strip_prefix("$ cd ") {
                 listing = false;
 
-                cwd = Some(match &line[5..] {
+                cwd = Some(match line {
                     "/" => root.clone(),
                     ".." => cwd
-                        .map(|x| x.borrow().parent.as_ref().map(|y| y.clone()))
-                        .flatten()
-                        .map(|x| x.clone())
-                        .unwrap_or(root.clone()),
+                        .and_then(|x| x.borrow().parent.as_ref().cloned())
+                        .unwrap_or_else(|| root.clone()),
                     dir_name => cwd
-                        .map(|x| x.borrow().find_child_dir(dir_name))
-                        .flatten()
-                        .unwrap_or(root.clone()),
+                        .and_then(|x| x.borrow().find_child_dir(dir_name))
+                        .unwrap_or_else(|| root.clone()),
                 })
             } else if line == "$ ls" && cwd.is_some() {
-                let cwd = (&cwd).as_ref().unwrap().as_ref();
+                let cwd = cwd.as_ref().unwrap().as_ref();
                 if cwd.borrow().children.is_none() {
                     cwd.borrow_mut().children = Some((vec![], vec![]));
                     listing = true;
                 }
             } else if listing && cwd.is_some() {
-                let mut dir = (&cwd).as_ref().unwrap().as_ref().borrow_mut();
+                let mut dir = cwd.as_ref().unwrap().as_ref().borrow_mut();
                 let children = dir.children.as_mut().unwrap();
-                if line.starts_with("dir ") {
+                if let Some(line) = line.strip_prefix("dir ") {
                     let new_dir = Rc::new(RefCell::new(Dir {
-                        name: line[4..].to_owned(),
+                        name: line.to_owned(),
                         calculated_size: None,
                         children: None,
-                        parent: Some((&cwd).as_ref().unwrap().clone()),
+                        parent: Some(cwd.as_ref().unwrap().clone()),
                     }));
                     dirs.push(new_dir.clone());
                     children.0.push(new_dir);

@@ -35,8 +35,8 @@ impl Pair {
 impl From<String> for Pair {
     fn from(line: String) -> Pair {
         let points: Vec<Vec<usize>> = line
-            .split(",")
-            .map(|x| x.split("-").map(|y| y.parse().unwrap()).collect())
+            .split(',')
+            .map(|x| x.split('-').map(|y| y.parse().unwrap()).collect())
             .collect();
 
         Pair((points[0][0], points[0][1]), (points[1][0], points[1][1]))

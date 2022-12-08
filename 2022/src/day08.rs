@@ -25,11 +25,7 @@ struct ScenicScore {
 }
 
 impl ScenicScore {
-    fn get_directional_score_from_so_far(
-        so_far: &Vec<u64>,
-        cur_key: usize,
-        cur_height: u64,
-    ) -> usize {
+    fn get_directional_score_from_so_far(so_far: &[u64], cur_key: usize, cur_height: u64) -> usize {
         so_far
             .iter()
             .enumerate()
@@ -39,10 +35,10 @@ impl ScenicScore {
     }
 
     fn get_overall_score(&self) -> usize {
-        return self.looking_up.unwrap()
+        self.looking_up.unwrap()
             * self.looking_down.unwrap()
             * self.looking_left.unwrap()
-            * self.looking_right.unwrap();
+            * self.looking_right.unwrap()
     }
 }
 

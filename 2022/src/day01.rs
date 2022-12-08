@@ -38,7 +38,7 @@ impl AocDay for Day {
         let mut vec: Vec<i64> = self.calories_sum.to_owned();
         vec.sort();
         vec.reverse();
-        (&vec[0..=2]).iter().sum()
+        vec[0..=2].iter().sum()
     }
 }
 

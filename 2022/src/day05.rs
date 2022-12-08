@@ -18,13 +18,12 @@ struct Move {
 
 impl From<String> for Move {
     fn from(line: String) -> Self {
-        let mut from_split = (&line[5..]).split(" from ");
-        let qty = from_split.next().unwrap().parse().unwrap();
-        let mut to_split = from_split.next().unwrap().split(" to ");
+        let mut split = line.split_whitespace().skip(1).step_by(2);
+
         Self {
-            qty,
-            from: to_split.next().unwrap().parse().unwrap(),
-            to: to_split.next().unwrap().parse().unwrap(),
+            qty: split.next().unwrap().parse().unwrap(),
+            from: split.next().unwrap().parse().unwrap(),
+            to: split.next().unwrap().parse().unwrap(),
         }
     }
 }

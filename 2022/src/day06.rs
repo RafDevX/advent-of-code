@@ -19,7 +19,8 @@ impl AocDay06 {
                 }
             }
         }
-        return false;
+
+        false
     }
 
     fn find_first_unique_part(&self, len: usize) -> Option<usize> {
@@ -42,12 +43,10 @@ impl AocDay06 {
 impl AocDay for Day {
     type R = i64;
 
-    fn preprocessing(lines: impl Iterator<Item = String>) -> Self {
-        // how to just return lines.next()? cannot borrow as mutable
-        for line in lines {
-            return AocDay06 { input: line };
+    fn preprocessing(mut lines: impl Iterator<Item = String>) -> Self {
+        Self {
+            input: lines.next().expect("Input must have at least one line"),
         }
-        panic!("No line provided");
     }
 
     fn part1(&self) -> Self::R {
