@@ -1,13 +1,13 @@
 use crate::AocDay;
 
+type Day = AocDay05;
+#[cfg(test)]
+static PUZZLE_INDEX: usize = 5;
+
 pub struct AocDay05 {
     stacks: Vec<Vec<char>>,
     moves: Vec<Move>,
 }
-
-type Day = AocDay05;
-#[cfg(test)]
-static PUZZLE_INDEX: usize = 5;
 
 #[derive(Debug)]
 struct Move {

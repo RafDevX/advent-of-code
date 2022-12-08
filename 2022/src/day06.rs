@@ -2,13 +2,13 @@ use std::collections::VecDeque;
 
 use crate::AocDay;
 
-pub struct AocDay06 {
-    input: String,
-}
-
 type Day = AocDay06;
 #[cfg(test)]
 static PUZZLE_INDEX: usize = 6;
+
+pub struct AocDay06 {
+    input: String,
+}
 
 impl AocDay06 {
     fn has_duplicates(deq: &VecDeque<char>) -> bool {

@@ -1,12 +1,12 @@
 use crate::AocDay;
 
-pub struct AocDay03 {
-    rucksacks: Vec<Rucksack>,
-}
-
 type Day = AocDay03;
 #[cfg(test)]
 static PUZZLE_INDEX: usize = 3;
+
+pub struct AocDay03 {
+    rucksacks: Vec<Rucksack>,
+}
 
 struct Rucksack {
     all: String,

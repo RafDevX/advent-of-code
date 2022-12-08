@@ -2,14 +2,14 @@ use std::{cell::RefCell, rc::Rc};
 
 use crate::AocDay;
 
+type Day = AocDay07;
+#[cfg(test)]
+static PUZZLE_INDEX: usize = 7;
+
 pub struct AocDay07 {
     root: Rc<RefCell<Dir>>,
     dirs: Vec<Rc<RefCell<Dir>>>,
 }
-
-type Day = AocDay07;
-#[cfg(test)]
-static PUZZLE_INDEX: usize = 7;
 
 const MAX_FS_SIZE: u64 = 70_000_000;
 const REQUIRED_UNUSED: u64 = 30_000_000;

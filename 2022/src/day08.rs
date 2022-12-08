@@ -2,13 +2,13 @@ use std::fmt::Debug;
 
 use crate::AocDay;
 
-pub struct AocDay08 {
-    matrix: Vec<Vec<Tree>>,
-}
-
 type Day = AocDay08;
 #[cfg(test)]
 static PUZZLE_INDEX: usize = 8;
+
+pub struct AocDay08 {
+    matrix: Vec<Vec<Tree>>,
+}
 
 struct Tree {
     height: u64,

@@ -1,12 +1,12 @@
 use crate::AocDay;
 
-pub struct AocDay04 {
-    pairs: Vec<Pair>,
-}
-
 type Day = AocDay04;
 #[cfg(test)]
 static PUZZLE_INDEX: usize = 4;
+
+pub struct AocDay04 {
+    pairs: Vec<Pair>,
+}
 
 struct Pair((usize, usize), (usize, usize));
 

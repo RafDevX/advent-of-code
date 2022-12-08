@@ -1,12 +1,12 @@
 use crate::AocDay;
 
-pub struct AocDay01 {
-    calories_sum: Vec<i64>,
-}
-
 type Day = AocDay01;
 #[cfg(test)]
 static PUZZLE_INDEX: usize = 1;
+
+pub struct AocDay01 {
+    calories_sum: Vec<i64>,
+}
 
 impl AocDay for Day {
     type R = i64;

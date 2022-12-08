@@ -1,13 +1,13 @@
 use crate::AocDay;
 
+type Day = AocDay02;
+#[cfg(test)]
+static PUZZLE_INDEX: usize = 2;
+
 pub struct AocDay02 {
     // (First Col, Second Col [Self Move Interpretation], Second Col [Outcome Interpretation])
     rounds: Vec<(OpponentMove, SelfMove, Outcome)>,
 }
-
-type Day = AocDay02;
-#[cfg(test)]
-static PUZZLE_INDEX: usize = 2;
 
 #[derive(Debug, Copy, Clone)]
 enum OpponentMove {

@@ -1,10 +1,10 @@
 use crate::AocDay;
 
-pub struct AocDay00 {}
-
 type Day = AocDay00;
 #[cfg(test)]
 static PUZZLE_INDEX: usize = 0;
+
+pub struct AocDay00 {}
 
 impl AocDay for Day {
     type R = i64;
