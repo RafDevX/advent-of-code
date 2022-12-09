@@ -99,31 +99,6 @@ impl From<String> for Move {
     }
 }
 
-// fn print_map(head: &Coord, tail: &Coord) {
-//     for j in (0..6).rev() {
-//         for i in 0..6 {
-//             let h = head.0 == i && head.1 == j;
-//             let t = tail.0 == i && tail.1 == j;
-//             print!(
-//                 "{}",
-//                 if h && t {
-//                     'B'
-//                 } else if h {
-//                     'H'
-//                 } else if t {
-//                     'T'
-//                 } else if i == 0 && j == 0 {
-//                     's'
-//                 } else {
-//                     '.'
-//                 }
-//             )
-//         }
-//         println!();
-//     }
-//     println!();
-// }
-
 impl Day {
     fn simulate(moves: &Vec<Move>, n_tails: usize) -> HashSet<Coord> {
         let mut knots = vec![Coord(0, 0)];
@@ -161,24 +136,6 @@ impl AocDay for Day {
         for line in lines {
             moves.push(line.into());
         }
-
-        // let mut head = Coord(0, 0);
-        // let mut tail = Coord(0, 0);
-        // let mut visited = HashSet::new();
-        // visited.insert(tail.clone());
-
-        // for mv in moves {
-        //     for _ in 0..mv.1 {
-        //         head.move_towards(&mv.0);
-        //         let adjustment = Move::step_towards(&tail, &head);
-        //         if let Some(step) = adjustment {
-        //             tail.move_by(&step);
-        //             visited.insert(tail.clone());
-        //         }
-        //     }
-        // }
-
-        // visited
 
         let visited_one = Self::simulate(&moves, 1);
         let visited_nine = Self::simulate(&moves, 9);
