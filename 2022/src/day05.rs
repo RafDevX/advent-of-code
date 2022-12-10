@@ -29,7 +29,8 @@ impl From<String> for Move {
 }
 
 impl AocDay for Day {
-    type R = String;
+    type R1 = String;
+    type R2 = String;
 
     fn preprocessing(lines: impl Iterator<Item = String>) -> Self {
         let mut stacks = vec![];
@@ -66,7 +67,7 @@ impl AocDay for Day {
         AocDay05 { stacks, moves }
     }
 
-    fn part1(&self) -> Self::R {
+    fn part1(&self) -> Self::R1 {
         let mut stacks = self.stacks.clone();
 
         for mv in self.moves.iter() {
@@ -79,7 +80,7 @@ impl AocDay for Day {
         stacks.iter().map(|x| x.last().unwrap()).collect()
     }
 
-    fn part2(&self) -> Self::R {
+    fn part2(&self) -> Self::R2 {
         let mut stacks = self.stacks.clone();
 
         for mv in self.moves.iter() {

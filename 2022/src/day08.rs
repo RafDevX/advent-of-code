@@ -108,7 +108,8 @@ impl Debug for Day {
 }
 
 impl AocDay for Day {
-    type R = usize;
+    type R1 = usize;
+    type R2 = usize;
 
     fn preprocessing(lines: impl Iterator<Item = String>) -> Self {
         let mut matrix = vec![];
@@ -167,14 +168,14 @@ impl AocDay for Day {
         Self::traverse_from_bottom(Self { matrix })
     }
 
-    fn part1(&self) -> Self::R {
+    fn part1(&self) -> Self::R1 {
         self.matrix
             .iter()
             .map(|row| (*row).iter().filter(|tree| tree.visible).count())
             .sum()
     }
 
-    fn part2(&self) -> Self::R {
+    fn part2(&self) -> Self::R2 {
         self.matrix
             .iter()
             .map(|row| {

@@ -9,7 +9,8 @@ pub struct AocDay01 {
 }
 
 impl AocDay for Day {
-    type R = i64;
+    type R1 = i64;
+    type R2 = i64;
 
     fn preprocessing(lines: impl Iterator<Item = String>) -> Self {
         let mut elves = Vec::new();
@@ -30,11 +31,11 @@ impl AocDay for Day {
         Self { calories_sum }
     }
 
-    fn part1(&self) -> Self::R {
+    fn part1(&self) -> Self::R1 {
         self.calories_sum.iter().max().unwrap().to_owned()
     }
 
-    fn part2(&self) -> Self::R {
+    fn part2(&self) -> Self::R2 {
         let mut vec: Vec<i64> = self.calories_sum.to_owned();
         vec.sort();
         vec.reverse();

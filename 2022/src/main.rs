@@ -52,11 +52,12 @@ fn main() {
 }
 
 pub trait AocDay {
-    type R: fmt::Display;
+    type R1: fmt::Display;
+    type R2: fmt::Display;
 
     fn preprocessing(lines: impl Iterator<Item = String>) -> Self;
-    fn part1(&self) -> Self::R;
-    fn part2(&self) -> Self::R;
+    fn part1(&self) -> Self::R1;
+    fn part2(&self) -> Self::R2;
 }
 
 fn get_settings() -> Result<Config, ConfigError> {

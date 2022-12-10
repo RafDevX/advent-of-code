@@ -29,7 +29,8 @@ impl Day {
 }
 
 impl AocDay for Day {
-    type R = i64;
+    type R1 = i64;
+    type R2 = i64;
 
     fn preprocessing(lines: impl Iterator<Item = String>) -> Self {
         let mut rucksacks = vec![];
@@ -47,7 +48,7 @@ impl AocDay for Day {
         Self { rucksacks }
     }
 
-    fn part1(&self) -> Self::R {
+    fn part1(&self) -> Self::R1 {
         let mut priorities = vec![];
 
         for rucksack in self.rucksacks.iter() {
@@ -64,7 +65,7 @@ impl AocDay for Day {
         priorities.iter().sum()
     }
 
-    fn part2(&self) -> Self::R {
+    fn part2(&self) -> Self::R2 {
         let mut priorities = vec![];
 
         for group in self.rucksacks.chunks(3) {

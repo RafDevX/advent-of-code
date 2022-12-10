@@ -44,7 +44,8 @@ impl From<String> for Pair {
 }
 
 impl AocDay for Day {
-    type R = i64;
+    type R1 = i64;
+    type R2 = i64;
 
     fn preprocessing(lines: impl Iterator<Item = String>) -> Self {
         let mut pairs = vec![];
@@ -56,7 +57,7 @@ impl AocDay for Day {
         Self { pairs }
     }
 
-    fn part1(&self) -> Self::R {
+    fn part1(&self) -> Self::R1 {
         self.pairs
             .iter()
             .filter(|x| x.either_fully_contained())
@@ -65,7 +66,7 @@ impl AocDay for Day {
             .unwrap()
     }
 
-    fn part2(&self) -> Self::R {
+    fn part2(&self) -> Self::R2 {
         self.pairs
             .iter()
             .filter(|x| x.overlaps())

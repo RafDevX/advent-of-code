@@ -129,7 +129,8 @@ impl Day {
 }
 
 impl AocDay for Day {
-    type R = usize;
+    type R1 = usize;
+    type R2 = usize;
 
     fn preprocessing(lines: impl Iterator<Item = String>) -> Self {
         let mut moves = vec![];
@@ -146,11 +147,11 @@ impl AocDay for Day {
         }
     }
 
-    fn part1(&self) -> Self::R {
+    fn part1(&self) -> Self::R1 {
         self.visited_one.len()
     }
 
-    fn part2(&self) -> Self::R {
+    fn part2(&self) -> Self::R2 {
         self.visited_nine.len()
     }
 }

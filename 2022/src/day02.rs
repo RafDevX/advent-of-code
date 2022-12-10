@@ -53,7 +53,8 @@ impl Day {
 }
 
 impl AocDay for Day {
-    type R = i64;
+    type R1 = i64;
+    type R2 = i64;
 
     fn preprocessing(lines: impl Iterator<Item = String>) -> Self {
         let mut rounds = vec![];
@@ -84,7 +85,7 @@ impl AocDay for Day {
         Self { rounds }
     }
 
-    fn part1(&self) -> Self::R {
+    fn part1(&self) -> Self::R1 {
         let info = self
             .rounds
             .iter()
@@ -109,7 +110,7 @@ impl AocDay for Day {
         Day::calc_score(info)
     }
 
-    fn part2(&self) -> Self::R {
+    fn part2(&self) -> Self::R2 {
         let info = self
             .rounds
             .iter()

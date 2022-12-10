@@ -63,7 +63,8 @@ struct File {
 }
 
 impl AocDay for Day {
-    type R = u64;
+    type R1 = u64;
+    type R2 = u64;
 
     fn preprocessing(lines: impl Iterator<Item = String>) -> Self {
         let root = Rc::new(RefCell::new(Dir {
@@ -121,7 +122,7 @@ impl AocDay for Day {
         Self { root, dirs }
     }
 
-    fn part1(&self) -> Self::R {
+    fn part1(&self) -> Self::R1 {
         self.dirs
             .iter()
             .map(|x| x.as_ref().borrow_mut().calculate_size())
@@ -129,7 +130,7 @@ impl AocDay for Day {
             .sum()
     }
 
-    fn part2(&self) -> Self::R {
+    fn part2(&self) -> Self::R2 {
         let used_up_space = self.root.borrow_mut().calculate_size();
         let unused_space = MAX_FS_SIZE - used_up_space;
         let required_to_delete = REQUIRED_UNUSED - unused_space;
