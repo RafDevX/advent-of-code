@@ -34,27 +34,22 @@ impl FromStr for Instruction {
     }
 }
 
-struct InstructionExecutionState<'a> {
+struct InstructionExecutionState {
     cycles_required: usize,
-    action: Box<dyn Fn(&mut i64) + 'a>,
+    action: Box<dyn Fn(&mut i64)>,
 }
 
-impl InstructionExecutionState<'_> {
+impl InstructionExecutionState {
     fn new(instruction: Instruction) -> Self {
-        match &instruction {
+        match instruction {
             Instruction::NoOp => Self {
                 cycles_required: 1,
                 action: Box::new(|_| ()),
             },
-            Instruction::AddX(v) => {
-                let v = *v; // how to avoid this?
-                            // "returns a value referencing data owned by the current function"
-
-                Self {
-                    cycles_required: 2,
-                    action: Box::new(move |x_register| *x_register += v),
-                }
-            }
+            Instruction::AddX(v) => Self {
+                cycles_required: 2,
+                action: Box::new(move |x_register| *x_register += v),
+            },
         }
     }
 
