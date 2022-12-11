@@ -22,10 +22,8 @@ struct Monkey {
 
 impl Monkey {
     fn read_one(lines: &mut impl Iterator<Item = String>) -> Self {
-        lines.next(); // why can't I use skip(1)? borrow checker doesn't like it
-
         let items = lines
-            .next()
+            .nth(1)
             .unwrap()
             .strip_prefix("  Starting items: ")
             .unwrap()
