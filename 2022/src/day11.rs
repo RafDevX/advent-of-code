@@ -1,4 +1,4 @@
-use std::{collections::HashMap, str::FromStr};
+use std::str::FromStr;
 
 use crate::AocDay;
 
@@ -6,8 +6,10 @@ type Day = AocDay11;
 #[cfg(test)]
 static PUZZLE_INDEX: usize = 11;
 
+#[derive(Clone)]
 pub struct AocDay11 {
-    monkey_business_level: HashMap<u64, u64>,
+    monkeys: Vec<Monkey>,
+    prod_divisible_by: u64,
 }
 
 #[derive(Clone)]
@@ -161,23 +163,18 @@ where
 }
 
 impl Day {
-    fn simulate(
-        n_rounds: u64,
-        relief_factor: u64,
-        prod_divisible_by: u64,
-        mut monkeys: Vec<Monkey>,
-    ) -> Vec<Monkey> {
+    fn simulate(&mut self, n_rounds: u64, relief_factor: u64) {
         for _ in 1..(n_rounds + 1) {
-            for i in 0..monkeys.len() {
+            for i in 0..self.monkeys.len() {
                 let mut push_backlog = vec![];
 
                 {
-                    let monkey = monkeys.get_mut(i).unwrap();
+                    let monkey = self.monkeys.get_mut(i).unwrap();
 
                     for item in monkey.items.iter() {
                         let mut worry = monkey.operation.exec(*item);
                         worry /= relief_factor;
-                        worry %= prod_divisible_by; // prevent unmanageable worry levels
+                        worry %= self.prod_divisible_by; // prevent unmanageable worry levels
 
                         let new_monkey = monkey.test.exec(worry);
                         push_backlog.push((new_monkey, worry));
@@ -189,19 +186,17 @@ impl Day {
                 }
 
                 for (new_monkey, worry) in push_backlog {
-                    monkeys.get_mut(new_monkey).unwrap().items.push(worry);
+                    self.monkeys.get_mut(new_monkey).unwrap().items.push(worry);
                 }
             }
         }
-
-        monkeys
     }
 
-    fn monkey_business_level(monkeys: &[Monkey]) -> u64 {
+    fn monkey_business_level(&self) -> u64 {
         let mut most = None;
         let mut second_most = None;
 
-        for n in monkeys.iter().map(|x| x.inspected_items) {
+        for n in self.monkeys.iter().map(|x| x.inspected_items) {
             if most.is_none() || n > most.unwrap() {
                 second_most = most;
                 most = Some(n);
@@ -220,7 +215,6 @@ impl AocDay for Day {
 
     fn preprocessing(mut lines: impl Iterator<Item = String>) -> Self {
         let mut monkeys = vec![];
-        let mut monkey_business_level = HashMap::new();
         let mut prod_divisible_by = 1;
 
         loop {
@@ -235,29 +229,22 @@ impl AocDay for Day {
             }
         }
 
-        for (n_rounds, relief_factor) in [(20, 3), (10_000, 1)] {
-            monkey_business_level.insert(
-                n_rounds,
-                Day::monkey_business_level(&Day::simulate(
-                    n_rounds,
-                    relief_factor,
-                    prod_divisible_by,
-                    monkeys.to_vec(),
-                )),
-            );
-        }
-
         Self {
-            monkey_business_level,
+            monkeys,
+            prod_divisible_by,
         }
     }
 
     fn part1(&self) -> Self::R1 {
-        *self.monkey_business_level.get(&20).unwrap()
+        let mut clone = (*self).clone();
+        clone.simulate(20, 3);
+        clone.monkey_business_level()
     }
 
     fn part2(&self) -> Self::R2 {
-        *self.monkey_business_level.get(&10_000).unwrap()
+        let mut clone = self.clone();
+        clone.simulate(10_000, 1);
+        clone.monkey_business_level()
     }
 }
 
