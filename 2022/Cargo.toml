@@ -7,3 +7,4 @@ edition = "2021"
 
 [dependencies]
 config = "0.13.2"
+pathfinding = "4.0.0"

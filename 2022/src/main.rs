@@ -16,6 +16,7 @@ use crate::day08::AocDay08;
 use crate::day09::AocDay09;
 use crate::day10::AocDay10;
 use crate::day11::AocDay11;
+use crate::day12::AocDay12;
 
 mod day01;
 mod day02;
@@ -28,6 +29,7 @@ mod day08;
 mod day09;
 mod day10;
 mod day11;
+mod day12;
 
 fn main() {
     let inputs_dir: String = get_settings().unwrap().get("inputs_dir").unwrap();
@@ -53,6 +55,7 @@ fn main() {
         9 => solve(AocDay09::preprocessing(input)),
         10 => solve(AocDay10::preprocessing(input)),
         11 => solve(AocDay11::preprocessing(input)),
+        12 => solve(AocDay12::preprocessing(input)),
         _ => unimplemented!("No such puzzle"),
     };
 }
