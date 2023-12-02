@@ -11,4 +11,4 @@ cd $1
 ghc --make ./part1
 ghc --make ./part2
 
-hyperfine "./part1 && ./part2" --warmup 50 --shell "/bin/sh"
+hyperfine "./part1 && ./part2" --warmup 250 --shell "/bin/sh"
